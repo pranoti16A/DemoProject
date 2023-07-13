@@ -1,23 +1,27 @@
+version: 0.2
 phases:
   install:
+    runtime-versions:
+      python: 3.8
     commands:
-      - echo "install phase..."
-  Pre_build:
-   commands:
-      - echo "pre build phase..." 
-      - apt-get update
-      - apt-get install -y jq
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-      - echo "current path is >>>"
-      - sh $pwd
-      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
-      - ls $pwd
-      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
-  build:
+      # Install SonarScanner
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+      - unzip sonar-scanner-cli-4.6.2.2472-linux.zip
+      - mv sonar-scanner-4.6.2.2472-linux sonar-scanner
+ pre_build:
     commands:
-      - echo "build phase"
-      - sonar-scanner -Dsonar.login="3bb96c3ebe7a0437f70c45a984ccedf70eeda59c" -Dsonar.host="https://sonarcloud.io" -Dsonar.projectkey="pranoti16A_DemoProject" -Dsonar.organization="pranoti16a"
-      - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectkey=pranoti16A_DemoProject >result.json
-      - cat result.json
+      # Install project dependencies (if any)
+      - pip install -r requirements.txt
+build:
+    commands:
+      # Run SonarQube analysis
+      - sonar-scanner/bin/sonar-scanner \
+        -Dsonar.projectKey=pranoti16A_DemoProject \
+        -Dsonar.sources=. \
+        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.login=625fc2f755eb713c48d278ca2398c8b896e1fb70
+artifacts:
+  files:
+    # Include any specific build artifacts (if needed)
+    - '**/*'
 
