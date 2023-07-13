@@ -1,0 +1,27 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      # Install SonarScanner
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+      - unzip sonar-scanner-cli-4.6.2.2472-linux.zip
+      - mv sonar-scanner-4.6.2.2472-linux sonar-scanner
+ pre_build:
+    commands:
+      # Install project dependencies (if any)
+      - pip install -r requirements.txt
+build:
+    commands:
+      # Run SonarQube analysis
+      - sonar-scanner/bin/sonar-scanner \
+        -Dsonar.projectKey=pranoti16A_DemoProject \
+        -Dsonar.sources=. \
+        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.login=625fc2f755eb713c48d278ca2398c8b896e1fb70
+artifacts:
+  files:
+    # Include any specific build artifacts (if needed)
+    - '**/*'
+
