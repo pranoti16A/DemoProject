@@ -12,6 +12,14 @@ phases:
     commands:
       # Install project dependencies (if any)
       - pip install --upgrade pip
+      - pip install virtualenv
+      - python3.11 -m venv myenv
+      - mkdir projectA
+      - cd projectA
+      - python3.11 -m venv myenv
+      - source myenv/bin/activate
+      - pip list
+      - pip freeze > requirements.txt
       - pip install -r requirements.txt
   build:
     commands:
