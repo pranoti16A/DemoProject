@@ -11,7 +11,8 @@ phases:
   pre_build:
     commands:
       # Install project dependencies (if any)
-      - python3.11 -m pip install -r requirements.txt
+      - pip install --upgrade pip
+      - pip install -r requirements.txt
   build:
     commands:
       # Run SonarQube analysis
