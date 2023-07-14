@@ -1,6 +1,6 @@
 version: 0.2
 phases:
-install:
+  install:
     runtime-versions:
       python: 3.8
     commands:
@@ -8,11 +8,11 @@ install:
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
       - unzip sonar-scanner-cli-4.6.2.2472-linux.zip
       - mv sonar-scanner-4.6.2.2472-linux sonar-scanner
-pre_build:
+  pre_build:
     commands:
       # Install project dependencies (if any)
       - pip install -r requirements.txt
-build:
+  build:
     commands:
       # Run SonarQube analysis
       - sonar-scanner/bin/sonar-scanner \
