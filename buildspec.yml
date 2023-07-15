@@ -3,7 +3,7 @@ env:
   secrets-manager:
     LOGIN: local/sonar:sonartoken
     HOST: local/sonar:Host
-    Organization: local.sonar:Organization
+    Organization: local/sonar:Organization
     project: local/sonar:Project
 phases:
   install:
