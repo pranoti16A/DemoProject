@@ -34,7 +34,7 @@ phases:
   build:
     commands:
       # Run SonarQube analysis
-      - sonar-scanner/SONAR_SCANNER_HOME/bin \
+      - sonar-scanner $HOME/.sonar/
       - Dsonar.organization=$Organization
       - Dsonar.projectKey=$project
       - Dsonar.sources=. \
