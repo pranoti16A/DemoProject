@@ -17,6 +17,7 @@ phases:
       - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
       - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
       - export SONAR_SCANNER_OPTS="-server"
+      - ls $pwd
   pre_build:
     commands:
       # Install project dependencies (if any)
