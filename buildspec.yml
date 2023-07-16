@@ -10,7 +10,7 @@ phases:
   install:
     commands:
       - echo "install phase..."
-  Pre_build:
+  pre_build:
    commands:
       - echo "pre build phase..." 
       - apt-get update
