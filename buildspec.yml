@@ -33,7 +33,7 @@ phases:
   build:
     commands:
       # Run SonarQube analysis
-      SONAR-SCANNER \
+      sonar-scanner
       - Dsonar.organization=pranoti16a \
       - Dsonar.projectKey=pranoti16A_DemoProject \
       - Dsonar.sources=. \
