@@ -34,10 +34,10 @@ phases:
     commands:
       # Run SonarQube analysis
       sonar-scanner \
-  -Dsonar.organization=pranoti16a \
-  -Dsonar.projectKey=pranoti16A_DemoProject \
-  -Dsonar.sources=. \
-  -Dsonar.host.url=https://sonarcloud.io
+      - Dsonar.organization=pranoti16a \
+      - Dsonar.projectKey=pranoti16A_DemoProject \
+      - Dsonar.sources=. \
+      - Dsonar.host.url=https://sonarcloud.io
 artifacts:
   files:
     # Include any specific build artifacts (if needed)
