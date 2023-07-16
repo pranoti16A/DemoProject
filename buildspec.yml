@@ -5,43 +5,26 @@ env:
     HOST: local/sonar:Host
     Organization: local/sonar:Organization
     project: local/sonar:Project
+
 phases:
   install:
-    runtime-versions:
-      python: 3.11
     commands:
-      # Install SonarScanner
-      - export SONAR_SCANNER_VERSION=4.7.0.2747
-      - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
-      - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
-      - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
-      - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
-      - export SONAR_SCANNER_OPTS="-server"
+      - echo "install phase..."
+  Pre_build:
+   commands:
+      - echo "pre build phase..." 
+      - apt-get update
+      - apt-get install -y jq
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - echo "current path is >>>"
+      - sh $pwd
+      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
       - ls $pwd
-  pre_build:
-    commands:
-      # Install project dependencies (if any)
-      - pip install --upgrade pip
-      - pip install virtualenv
-      - python3.11 -m venv myenv
-      - mkdir projectA
-      - cd projectA
-      - python3.11 -m venv myenv
-      - source myenv/bin/activate
-      - pip list
-      - pip freeze > requirements.txt
-      - pip install -r requirements.txt
+      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
   build:
     commands:
-      # Run SonarQube analysis
-      - sonar-scanner $HOME/.sonar/sonar-scanner
-      - Dsonar.organization=$Organization
-      - Dsonar.projectKey=$project
-      - Dsonar.sources=. \
-      - Dsonar.host.url=$HOST
-      - Dsonar.login=$LOGIN
-artifacts:
-  files:
-    # Include any specific build artifacts (if needed)
-    - '**/*'
-
+      - echo "build phase"
+      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host=$HOST -Dsonar.projectkey=$project -Dsonar.organization=$Organization
+      - sleep 5
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectkey=pranoti16A_DemoProject >result.json
+      - cat result.json
